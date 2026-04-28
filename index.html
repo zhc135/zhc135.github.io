@@ -2,14 +2,76 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的个人网站</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人网站 ✨</title>
     <style>
-        body { text-align: center; margin-top: 50px; font-size: 20px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            /* 渐变背景 */
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf5 100%);
+            min-height: 100vh;
+            text-align: center;
+            padding: 80px 20px;
+            font-size: 20px;
+        }
+
+        /* 主容器卡片样式 */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 50px 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 36px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* 博客链接按钮样式 */
+        .blog-link {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: #4a90e2;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #4a90e2;
+        }
+
+        /* 鼠标悬停效果 */
+        .blog-link:hover {
+            background-color: white;
+            color: #4a90e2;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+        }
     </style>
 </head>
 <body>
-    <h1>欢迎来到我的个人网站</h1>
-    <p>这是我用GitHub Pages搭建的网站</p>
-    <a href="blog.html">我的数据分析博客</a>
+    <div class="container">
+        <h1>✨ 欢迎来到我的个人网站</h1>
+        <p>📌 这是我用 GitHub Pages 搭建的专属网站</p>
+        <a href="blog.html" class="blog-link">📊 我的数据分析博客</a>
+    </div>
 </body>
 </html>

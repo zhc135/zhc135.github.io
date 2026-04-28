@@ -102,7 +102,7 @@
 <p>整体中位生存时间为<strong>34.0个月</strong>，最大观察时间为72个月。曲线显示随着时间推移，生存概率逐渐下降，前20个月流失加速，之后趋于平缓。</p>
 
 <h3>2.2 分组生存曲线与Log-rank检验</h3>
-<p>选取几个关键变量展示分组生存曲线及log-rank检验结果：</p>
+<p>本节展示多个关键变量的分组生存曲线及log-rank检验结果，从原始输出中挑选了具有代表性的变量进行详细解读。</p>
 
 <h4>按性别分组</h4>
 <div class="figure-placeholder">
@@ -115,7 +115,40 @@
 </table>
 <p>性别间生存曲线无统计学显著差异（p>0.05）。</p>
 
-<h4>按在线安全服务 (OnlineSecurity) 分组</h4>
+<h4>按老年公民 (SeniorCitizen) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure7_KM_SeniorCitizen.png" alt="按老年公民分组的生存曲线" style="width:80%;">
+    <div class="caption">图7. 老年公民组生存曲线对比（Block2）</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>0 vs 1</td><td>0.1255</td><td>0.7232</td><td>0.4676</td></tr>
+</table>
+<p>是否为老年公民对生存时间同样没有显著影响（p=0.72），说明年龄因素可能通过其他服务选择间接影响流失，而非直接作用。</p>
+
+<h4>按拥有伴侣 (Partner) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure8_KM_Partner.png" alt="按伴侣分组的生存曲线" style="width:80%;">
+    <div class="caption">图8. 是否有伴侣的生存曲线对比（Block2）</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>No vs Yes</td><td>135.759</td><td>2.25e-31</td><td>101.81</td></tr>
+</table>
+<p>没有伴侣的客户流失风险远高于有伴侣的客户（p<<0.001），说明家庭稳定性对客户粘性有强烈保护作用。</p>
+
+<h4>按有无家属 (Dependents) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure9_KM_Dependents.png" alt="按家属分组的生存曲线" style="width:80%;">
+    <div class="caption">图9. 是否有家属的生存曲线对比（Block2）</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>No vs Yes</td><td>35.031</td><td>3.24e-09</td><td>28.20</td></tr>
+</table>
+<p>无家属的客户生存期更短，差异高度显著。该变量在后续Cox模型中也表现出独立的风险降低作用。</p>
+
+<h4>按在线安全 (OnlineSecurity) 分组</h4>
 <div class="figure-placeholder">
     <img src="Figure3_KM_OnlineSecurity.png" alt="按在线安全分组的生存曲线" style="width:80%;">
     <div class="caption">图3. “在线安全”有无对生存曲线的影响</div>
@@ -125,6 +158,66 @@
     <tr><td>No vs Yes</td><td>141.603</td><td>1.19e-32</td><td>106.05</td></tr>
 </table>
 <p>未购买在线安全服务的客户流失风险显著更高（p<<0.001）。</p>
+
+<h4>按在线备份 (OnlineBackup) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure10_KM_OnlineBackup.png" alt="按在线备份分组的生存曲线" style="width:80%;">
+    <div class="caption">图10. 在线备份服务对生存曲线的影响（Block2）</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>No vs Yes</td><td>189.483</td><td>4.12e-43</td><td>140.80</td></tr>
+</table>
+<p>未订阅在线备份的客户流失风险极高，log-rank检验统计量在所有变量中最大，提示在线备份可能是保留客户的关键服务之一。</p>
+
+<h4>按技术支持 (TechSupport) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure11_KM_TechSupport.png" alt="按技术支持分组的生存曲线" style="width:80%;">
+    <div class="caption">图11. 技术支持服务对生存曲线的影响（Block2）</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>No vs Yes</td><td>90.430</td><td>1.92e-21</td><td>68.82</td></tr>
+</table>
+<p>没有技术支持的客户流失概率同样显著更高，与Cox模型结果一致。</p>
+
+<h4>按流媒体电视 (StreamingTV) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure12_KM_StreamingTV.png" alt="按流媒体电视分组的生存曲线" style="width:80%;">
+    <div class="caption">图12. 是否订阅流媒体电视的生存曲线对比（Block2）</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>No vs Yes</td><td>12.939</td><td>0.000322</td><td>11.60</td></tr>
+</table>
+<p>订阅流媒体电视的客户生存期略长，但差异相对较小，表明其影响可能弱于备份或技术支持类服务。</p>
+
+<h4>按无纸化账单 (PaperlessBilling) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure13_KM_PaperlessBilling.png" alt="按无纸化账单分组的生存曲线" style="width:80%;">
+    <div class="caption">图13. 是否使用无纸化账单的生存曲线对比（Block2）</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>No vs Yes</td><td>8.341</td><td>0.00388</td><td>8.011</td></tr>
+</table>
+<p>采用无纸化账单的客户流失风险略微升高（p<0.01），但效应量有限，可能与该群体更倾向纯线上交互有关。</p>
+
+<h4>按支付方式 (PaymentMethod) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure14_KM_PaymentMethod.png" alt="按支付方式分组的生存曲线" style="width:80%;">
+    <div class="caption">图14. 不同支付方式的生存曲线对比（Block2）</div>
+</div>
+<table>
+    <tr><th>分组对比</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>Bank transfer vs Credit card</td><td>0.062</td><td>0.804</td><td>0.315</td></tr>
+    <tr><td>Bank transfer vs Electronic check</td><td>91.192</td><td>1.30e-21</td><td>69.38</td></tr>
+    <tr><td>Bank transfer vs Mailed check</td><td>43.537</td><td>4.16e-11</td><td>34.48</td></tr>
+    <tr><td>Credit card vs Electronic check</td><td>79.991</td><td>3.76e-19</td><td>61.21</td></tr>
+    <tr><td>Credit card vs Mailed check</td><td>39.685</td><td>2.98e-10</td><td>31.64</td></tr>
+    <tr><td>Electronic check vs Mailed check</td><td>0.898</td><td>0.343</td><td>1.543</td></tr>
+</table>
+<p>使用电子支票的客户流失率显著高于银行转账、信用卡和邮寄支票的客户，而银行转账与信用卡之间差异不显著。这表明支付方式的便捷性与忠诚度并不简单线性关联，电子支票用户可能整体价格敏感性更高。</p>
 
 <h4>按互联网服务类型 (InternetService) 分组</h4>
 <div class="figure-placeholder">
@@ -137,7 +230,8 @@
 </table>
 <p>使用DSL客户的生存期显著长于光纤客户。</p>
 
-<p>其他变量（如Partner, Dependents, OnlineBackup等）的log-rank检验结果均显示在p<0.001水平上显著，表明这些因素也显著影响客户流失时间（具体摘要见完整输出）。</p>
+<h4>电话服务和多线服务</h4>
+<p>PhoneService 的 log-rank 检验 p 值为 0.194，无显著差异；MultipleLines 的三组比较显示“无电话服务-否”与“是”之间存在显著差异（p<0.001），但“无电话服务”与“是”之间的比较未达显著水准，说明多线服务本身对生存的影响可能混杂了其他因素。</p>
 
 <h3>2.3 DSL客户早期生存概率</h3>
 <p>前10个月的生存概率序列如下（已保存至 survival_probs_dsl_first10months.csv）：</p>
@@ -154,9 +248,10 @@
     <tr><td>8</td><td>0.768486</td></tr>
     <tr><td>9</td><td>0.750833</td></tr>
 </table>
+<p>DSL客户在前两个月生存概率下降较快，之后趋于平缓，说明新客户的初期流失需要重点关注。</p>
 
 <h2>3. Cox 比例风险回归模型</h2>
-<p>选取四个具有显著影响且业务可解释的变量构建Cox模型：是否有家属(Dependents_Yes)、是否为DSL用户(InternetService_DSL)、是否有在线备份(OnlineBackup_Yes)、是否有技术支持(TechSupport_Yes)。模型结果如下：</p>
+<p>模型以四个具有显著影响且业务可解释的变量构建：是否有家属(Dependents_Yes)、是否为DSL用户(InternetService_DSL)、是否有在线备份(OnlineBackup_Yes)、是否有技术支持(TechSupport_Yes)。这四个协变量在单变量KM分析中也表现出高度显著性。Cox模型同时放入这些变量，控制了彼此之间的混杂效应。模型结果如下：</p>
 
 <table>
     <tr><th>协变量</th><th>系数(coef)</th><th>风险比(exp(coef))</th><th>标准误</th><th>z值</th><th>p值</th><th>-log2(p)</th></tr>
@@ -165,7 +260,7 @@
     <tr><td>OnlineBackup_Yes</td><td>-0.77662</td><td>0.4599</td><td>0.05916</td><td>-13.128</td><td>2.28e-39</td><td>128.37</td></tr>
     <tr><td>TechSupport_Yes</td><td>-0.63917</td><td>0.5277</td><td>0.07533</td><td>-8.485</td><td>2.16e-17</td><td>55.360</td></tr>
 </table>
-<p>所有系数的p值均小于0.001，表明这些变量对生存时间有极强的统计显著性。风险比(exp(coef)) <1 表示具有该特征的客户流失风险更低（生存期更长）。例如，有在线备份的客户流失风险比无备份者低约54%。</p>
+<p>所有系数的p值均小于0.001，表明这些变量对生存时间有极强的统计显著性。风险比(exp(coef)) <1 表示具有该特征的客户流失风险更低（生存期更长）。例如，有在线备份的客户流失风险比无备份者低约54%。该模型确认了在控制其他因素后，订阅附加服务（备份、技术支持）依然是保护客户的有力因素。</p>
 
 <h2>4. 比例风险假设检验</h2>
 <p>使用Schoenfeld残差法检验Cox模型的比例风险假设，结果如下：</p>
@@ -181,26 +276,27 @@
 <table>
     <tr><th>变量</th><th>检验方法</th><th>统计量</th><th>p值</th><th>结论</th></tr>
     <tr><td>Dependents_Yes</td><td>km / rank</td><td>1.48 / 0.81</td><td>0.22 / 0.37</td><td>未违反假设</td></tr>
-    <tr><td>InternetService_DSL</td><td>km / rank</td><td>20.98 / 26.71</td><td> &lt;0.005</td><td>违反假设</td></tr>
+    <tr><td>InternetService_DSL</td><td>km / rank</td><td>20.98 / 26.71</td><td>&lt;0.005</td><td>违反假设</td></tr>
     <tr><td>OnlineBackup_Yes</td><td>km / rank</td><td>17.80 / 17.47</td><td>&lt;0.005</td><td>违反假设</td></tr>
     <tr><td>TechSupport_Yes</td><td>km / rank</td><td>8.09 / 13.76</td><td>&lt;0.005</td><td>违反假设</td></tr>
 </table>
-<p>三个变量(InternetService_DSL, OnlineBackup_Yes, TechSupport_Yes)均显著偏离比例风险假定。建议采用分层Cox模型或使用时依协变量进行修正。但鉴于这些变量均为二分类且业务意义明确，当前模型仍可视为风险因素的初步评估。</p>
+<p>三个变量(InternetService_DSL, OnlineBackup_Yes, TechSupport_Yes)均显著偏离比例风险假定。从Schoenfeld残差图（图5）中也可观察到部分变量的效应随时间变化。Log-log曲线（图6）中的交叉或非平行现象也支持了这一点。因此，建议在实际部署中考虑分层Cox模型或按时变系数扩展，但当前模型仍能为风险因素识别提供有价值的参考。</p>
 
 <h2>5. 结论与业务建议</h2>
 <div class="insight-box">
     <ul>
-        <li><strong>关键风险因素</strong>：缺乏在线备份、缺乏技术支持、使用光纤服务、无家属的客户更容易流失。</li>
+        <li><strong>关键风险因素</strong>：缺乏在线备份、缺乏技术支持、使用光纤服务、无家属的客户更容易流失。付款方式中电子支票用户流失风险突出。</li>
         <li><strong>保护因素</strong>：拥有家属、使用DSL服务、购买在线备份或技术支持服务能显著延长客户生命周期。</li>
-        <li><strong>运营建议</strong>：针对光纤用户主动推广在线备份和技术支持套餐；对无家属的单身客户设计忠诚度计划；监控早期（前10个月）流失高峰，加强新客户引导。</li>
-        <li><strong>模型局限性</strong>：部分变量违反比例风险假定，后续可考虑分层分析或使用时变系数模型优化。</li>
+        <li><strong>运营建议</strong>：针对光纤用户主动推广在线备份和技术支持套餐；对无家属的单身客户设计忠诚度计划；监控早期（前10个月）流失高峰，加强新客户引导；特别关注使用电子支票支付的客户，探索其原因并提供替代支付激励。</li>
+        <li><strong>模型局限性</strong>：部分变量违反比例风险假定，后续可考虑分层分析或使用时变系数模型优化。本次分析未纳入交互效应，未来可进一步探索服务组合的协同影响。</li>
     </ul>
 </div>
 
 <hr>
 <footer>
     报告生成日期：2025年4月 | 数据来源：Telco Customer Churn (Kaggle)<br>
-    分析工具：Python (lifelines, pandas, matplotlib) | 报告基于Notebook Q2的输出结果整理。
+    分析工具：Python (lifelines, pandas, matplotlib) | 报告基于Notebook Q2的输出结果整理。<br>
+    补充图表（Figure7~Figure14）均来自Notebook第二个Block（Kaplan-Meier 生存分析）的分组曲线输出，Log-rank检验表格对应相同Block的 `print_logrank_by_category` 结果。
 </footer>
 
 </body>

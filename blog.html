@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>生存分析报告 | Telco客户流失研究</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 40px auto;
+            max-width: 1200px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #2c3e50;
+        }
+        h1 {
+            color: #2c6ecb;
+            border-bottom: 3px solid #2c6ecb;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #1a5276;
+            margin-top: 30px;
+            border-left: 5px solid #2c6ecb;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #2c6ecb;
+            color: white;
+            font-weight: bold;
+        }
+        .figure-placeholder {
+            text-align: center;
+            margin: 25px 0;
+            background-color: #eef2f7;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #2c6ecb;
+        }
+        .figure-placeholder img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .caption {
+            font-size: 0.9em;
+            color: #5d6d7e;
+            margin-top: 8px;
+            text-align: center;
+        }
+        hr {
+            margin: 40px 0;
+            border: 0;
+            height: 1px;
+            background: #ccc;
+        }
+        .insight-box {
+            background-color: #eaf2f8;
+            padding: 15px;
+            border-left: 4px solid #2c6ecb;
+            margin: 20px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📊 客户流失生存分析报告</h1>
+<p>基于 Telco Customer Churn 数据集，对月付型互联网服务客户进行生存分析，探索影响客户留存时间的关键因素。</p>
+<hr>
+
+<h2>1. 研究目标与数据描述</h2>
+<p>本次分析旨在识别提前终止服务（流失）的风险因素，并量化各因素对客户“生存时间”（即客户持续使用服务的月数）的影响。数据集包含7043条记录，经筛选后保留<strong>3351名月付型且使用互联网服务</strong>的客户。主要变量包括：tenure（生存时间）、Churn（事件指示变量，1=流失，0=删失）及多个协变量（性别、老年公民、伴侣、依赖者、互联网服务类型、在线安全、在线备份等）。</p>
+
+<h2>2. Kaplan-Meier 生存分析</h2>
+<h3>2.1 整体生存曲线</h3>
+<div class="figure-placeholder">
+    <img src="Figure1_Overall_KM.png" alt="整体生存曲线" style="width:80%;">
+    <div class="caption">图1. 全部样本的Kaplan-Meier生存曲线</div>
+</div>
+<p>整体中位生存时间为<strong>34.0个月</strong>，最大观察时间为72个月。曲线显示随着时间推移，生存概率逐渐下降，前20个月流失加速，之后趋于平缓。</p>
+
+<h3>2.2 分组生存曲线与Log-rank检验</h3>
+<p>选取几个关键变量展示分组生存曲线及log-rank检验结果：</p>
+
+<h4>按性别分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure2_KM_gender.png" alt="按性别分组的生存曲线" style="width:80%;">
+    <div class="caption">图2. 男女性别组生存曲线对比</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>Female vs Male</td><td>2.0389</td><td>0.1533</td><td>2.705</td></tr>
+</table>
+<p>性别间生存曲线无统计学显著差异（p>0.05）。</p>
+
+<h4>按在线安全服务 (OnlineSecurity) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure3_KM_OnlineSecurity.png" alt="按在线安全分组的生存曲线" style="width:80%;">
+    <div class="caption">图3. “在线安全”有无对生存曲线的影响</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>No vs Yes</td><td>141.603</td><td>1.19e-32</td><td>106.05</td></tr>
+</table>
+<p>未购买在线安全服务的客户流失风险显著更高（p<<0.001）。</p>
+
+<h4>按互联网服务类型 (InternetService) 分组</h4>
+<div class="figure-placeholder">
+    <img src="Figure4_KM_InternetService.png" alt="按互联网服务类型分组的生存曲线" style="width:80%;">
+    <div class="caption">图4. DSL与光纤客户生存曲线对比</div>
+</div>
+<table>
+    <tr><th>分组</th><th>检验统计量</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>DSL vs Fiber optic</td><td>25.173</td><td>5.24e-07</td><td>20.86</td></tr>
+</table>
+<p>使用DSL客户的生存期显著长于光纤客户。</p>
+
+<p>其他变量（如Partner, Dependents, OnlineBackup等）的log-rank检验结果均显示在p<0.001水平上显著，表明这些因素也显著影响客户流失时间（具体摘要见完整输出）。</p>
+
+<h3>2.3 DSL客户早期生存概率</h3>
+<p>前10个月的生存概率序列如下（已保存至 survival_probs_dsl_first10months.csv）：</p>
+<table>
+    <tr><th>时间(月)</th><th>生存概率</th></tr>
+    <tr><td>0</td><td>1.000000</td></tr>
+    <tr><td>1</td><td>0.902698</td></tr>
+    <tr><td>2</td><td>0.864380</td></tr>
+    <tr><td>3</td><td>0.834702</td></tr>
+    <tr><td>4</td><td>0.810522</td></tr>
+    <tr><td>5</td><td>0.794352</td></tr>
+    <tr><td>6</td><td>0.783900</td></tr>
+    <tr><td>7</td><td>0.776362</td></tr>
+    <tr><td>8</td><td>0.768486</td></tr>
+    <tr><td>9</td><td>0.750833</td></tr>
+</table>
+
+<h2>3. Cox 比例风险回归模型</h2>
+<p>选取四个具有显著影响且业务可解释的变量构建Cox模型：是否有家属(Dependents_Yes)、是否为DSL用户(InternetService_DSL)、是否有在线备份(OnlineBackup_Yes)、是否有技术支持(TechSupport_Yes)。模型结果如下：</p>
+
+<table>
+    <tr><th>协变量</th><th>系数(coef)</th><th>风险比(exp(coef))</th><th>标准误</th><th>z值</th><th>p值</th><th>-log2(p)</th></tr>
+    <tr><td>Dependents_Yes</td><td>-0.32865</td><td>0.7199</td><td>0.07086</td><td>-4.638</td><td>3.52e-06</td><td>18.116</td></tr>
+    <tr><td>InternetService_DSL</td><td>-0.21733</td><td>0.8047</td><td>0.05904</td><td>-3.681</td><td>2.32e-04</td><td>12.073</td></tr>
+    <tr><td>OnlineBackup_Yes</td><td>-0.77662</td><td>0.4599</td><td>0.05916</td><td>-13.128</td><td>2.28e-39</td><td>128.37</td></tr>
+    <tr><td>TechSupport_Yes</td><td>-0.63917</td><td>0.5277</td><td>0.07533</td><td>-8.485</td><td>2.16e-17</td><td>55.360</td></tr>
+</table>
+<p>所有系数的p值均小于0.001，表明这些变量对生存时间有极强的统计显著性。风险比(exp(coef)) <1 表示具有该特征的客户流失风险更低（生存期更长）。例如，有在线备份的客户流失风险比无备份者低约54%。</p>
+
+<h2>4. 比例风险假设检验</h2>
+<p>使用Schoenfeld残差法检验Cox模型的比例风险假设，结果如下：</p>
+<div class="figure-placeholder">
+    <img src="Figure5_Schoenfeld_Residuals.png" alt="Schoenfeld残差图" style="width:80%;">
+    <div class="caption">图5. 各协变量的Schoenfeld残差与时间的关系</div>
+</div>
+<div class="figure-placeholder">
+    <img src="Figure6_LogLog_KM.png" alt="Log-Log生存曲线" style="width:80%;">
+    <div class="caption">图6. 分类变量的log-log生存曲线（辅助诊断比例风险）</div>
+</div>
+<p>检验结果显示：</p>
+<table>
+    <tr><th>变量</th><th>检验方法</th><th>统计量</th><th>p值</th><th>结论</th></tr>
+    <tr><td>Dependents_Yes</td><td>km / rank</td><td>1.48 / 0.81</td><td>0.22 / 0.37</td><td>未违反假设</td></tr>
+    <tr><td>InternetService_DSL</td><td>km / rank</td><td>20.98 / 26.71</td><td> &lt;0.005</td><td>违反假设</td></tr>
+    <tr><td>OnlineBackup_Yes</td><td>km / rank</td><td>17.80 / 17.47</td><td>&lt;0.005</td><td>违反假设</td></tr>
+    <tr><td>TechSupport_Yes</td><td>km / rank</td><td>8.09 / 13.76</td><td>&lt;0.005</td><td>违反假设</td></tr>
+</table>
+<p>三个变量(InternetService_DSL, OnlineBackup_Yes, TechSupport_Yes)均显著偏离比例风险假定。建议采用分层Cox模型或使用时依协变量进行修正。但鉴于这些变量均为二分类且业务意义明确，当前模型仍可视为风险因素的初步评估。</p>
+
+<h2>5. 结论与业务建议</h2>
+<div class="insight-box">
+    <ul>
+        <li><strong>关键风险因素</strong>：缺乏在线备份、缺乏技术支持、使用光纤服务、无家属的客户更容易流失。</li>
+        <li><strong>保护因素</strong>：拥有家属、使用DSL服务、购买在线备份或技术支持服务能显著延长客户生命周期。</li>
+        <li><strong>运营建议</strong>：针对光纤用户主动推广在线备份和技术支持套餐；对无家属的单身客户设计忠诚度计划；监控早期（前10个月）流失高峰，加强新客户引导。</li>
+        <li><strong>模型局限性</strong>：部分变量违反比例风险假定，后续可考虑分层分析或使用时变系数模型优化。</li>
+    </ul>
+</div>
+
+<hr>
+<footer>
+    报告生成日期：2025年4月 | 数据来源：Telco Customer Churn (Kaggle)<br>
+    分析工具：Python (lifelines, pandas, matplotlib) | 报告基于Notebook Q2的输出结果整理。
+</footer>
+
+</body>
+</html>
